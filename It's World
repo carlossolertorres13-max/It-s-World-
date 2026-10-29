@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>IT'S WORLD - Global Super-App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0a0812;
+            --bg-card: rgba(22, 18, 36, 0.92);
+            --bg-input: #171226;
+            --primary: #d4c5ff;
+            --primary-accent: #b197fc;
+            --primary-dark: #845ef7;
+            --primary-glow: rgba(177, 151, 252, 0.45);
+            --text-main: #f8f9fa;
+            --text-muted: #a6a2b8;
+            --border: rgba(212, 197, 255, 0.2);
+            --border-active: rgba(212, 197, 255, 0.6);
+            --radius-sm: 12px;
+            --radius-md: 18px;
+            --radius-lg: 26px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(177, 151, 252, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 90%, rgba(132, 94, 247, 0.08) 0%, transparent 40%);
+        }
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 18px;
+            margin-bottom: 16px;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.45);
+            transition: all 0.2s ease;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 18px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #d4c5ff 0%, #b197fc 100%);
+            color: #0d091a;
+            box-shadow: 0 5px 0 #7048e8, 0 6px 18px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+
+        .btn-purple:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #7048e8, 0 3px 8px var(--primary-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-input);
+            color: var(--text-main);
+            border: 1px solid var(--border-active);
+            box-shadow: 0 4px 0 rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(2px);
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-sm {
+            padding: 7px 12px;
+            font-size: 11px;
+            border-radius: 10px;
+            width: auto;
+        }
+
+        .btn-close {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 12px 14px;
+            font-size: 13px;
+            outline: none;
+            margin-bottom: 12px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 12px var(--primary-glow);
+        }
+
+        label {
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .tag-badge {
+            background: rgba(177, 151, 252, 0.18);
+            border: 1px solid rgba(177, 151, 252, 0.4);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 800;
+            display: inline-block;
+            margin: 3px;
+        }
+        /* Historias */
+        .stories-bar {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+            scrollbar-width: none;
+        }
+        .stories-bar::-webkit-scrollbar { display: none; }
+
+        .story-item {
+            flex: 0 0 auto;
+            width: 72px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .story-avatar-wrap {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            padding: 2.5px;
+            background: linear-gradient(135deg, var(--primary-accent), var(--primary-dark));
+            margin: 0 auto 6px auto;
+            box-shadow: 0 4px 12px var(--primary-glow);
+        }
+
+        .story-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-input);
+            border: 2px solid var(--bg-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--primary);
+        }
+
+        .story-name {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 700;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Dropdown Header */
+        .profile-menu-container { position: relative; }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 48px;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-active);
+            border-radius: var(--radius-sm);
+            width: 200px;
+            box-shadow: 0 12px 36px rgba(0,0,0,0.6);
+            z-index: 1500;
+            overflow: hidden;
+            backdrop-filter: blur(16px);
+        }
+        .dropdown-item {
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-main);
+            cursor: pointer;
+            transition: background 0.2s;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dropdown-item:last-child { border-bottom: none; }
+        .dropdown-item:hover { background: rgba(177, 151, 252, 0.15); }
+
+        /* Grids Spotify */
+        .spotify-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 14px;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+        .spotify-card {
+            background: var(--bg-input);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .spotify-card img { width: 100%; height: 95px; object-fit: cover; object-position: top; }
+        .spotify-card span { display: block; padding: 8px 4px; font-size: 11px; font-weight: 800; }
+        .spotify-card.selected { border-color: var(--primary-accent); background: rgba(177, 151, 252, 0.25); box-shadow: 0 0 12px var(--primary-glow); }
+
+        .spotify-chip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 14px; max-height: 200px; overflow-y: auto; }
+        .spotify-chip { background: var(--bg-input); border: 2px solid var(--border); border-radius: 10px; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: 700; cursor: pointer; }
+        .spotify-chip.selected { background: rgba(177, 151, 252, 0.3); border-color: var(--primary-accent); color: #fff; }
+
+        /* Modales Generales */
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(10px); justify-content: center; align-items: center; z-index: 3000; padding: 16px; }
+        .modal-content { background: var(--bg-card); border: 1px solid var(--border-active); border-radius: var(--radius-lg); padding: 22px; width: 100%; max-width: 480px; max-height: 88vh; overflow-y: auto; position: relative; }
+        .close-modal { position: absolute; top: 16px; right: 18px; font-size: 12px; cursor: pointer; color: var(--text-muted); font-weight: bold; background: none; border: none; }
+    </style>
+</head>
+<body id="app-body">
+
+    <!-- Screen Auth -->
+    <div id="screen-auth" style="position: fixed; inset: 0; background: linear-gradient(135deg, #0a0812 0%, #1e1736 100%); display: flex; justify-content: center; align-items: center; z-index: 2000; padding: 16px;">
+        <div class="card" style="width: 100%; max-width: 410px; text-align: center; border: 1px solid var(--border-active); padding: 28px 20px;">
+            <div style="width: 52px; height: 52px; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-radius: 14px; display: flex; justify-content: center; align-items: center; font-weight: 900; font-size: 24px; color: #0a0812; margin: 0 auto 12px auto; box-shadow: 0 6px 20px var(--primary-glow);">IW</div>
+            <h1 style="color: var(--primary); font-size: 26px; font-weight: 900; letter-spacing: 2px; margin-bottom: 2px;">IT'S WORLD</h1>
+            <p style="color: var(--text-muted); font-size: 11px; margin-bottom: 22px; font-weight: 600;">Plataforma Global e Interactiva</p>
+
+            <div id="box-login">
+                <div style="text-align: left;">
+                    <label>Usuario (Apodo)</label>
+                    <input type="text" id="login-u" placeholder="Ej: carlos (o got)">
+                    <label>Contraseña</label>
+                    <input type="password" id="login-p" placeholder="Ej: 123">
+                </div>
+                <button class="btn btn-purple" style="margin-top: 8px;" onclick="iniciarSesion()">Ingresar</button>
+                <button class="btn btn-secondary" style="margin-top: 12px;" onclick="iniciarOnboardingSpotify(1)">Crear Cuenta</button>
+            </div>
+            <!-- Onboarding Paso 1 -->
+            <div id="onb-step-1" style="display: none; text-align: left;">
+                <h3 style="color: var(--primary); text-align: center; margin-bottom: 12px; font-size: 15px;">Paso 1: Especificaciones</h3>
+                
+                <label>Nombre Completo</label>
+                <input type="text" id="onb-nombre" placeholder="Nombre y Apellido">
+                
+                <label>País de Residencia</label>
+                <select id="onb-pais">
+                    <option value="">Selecciona tu país...</option>
+                    <option value="Colombia">Colombia</option>
+                    <option value="México">México</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Perú">Perú</option>
+                    <option value="España">España</option>
+                    <option value="Estados Unidos">Estados Unidos</option>
+                    <option value="Ecuador">Ecuador</option>
+                    <option value="Venezuela">Venezuela</option>
+                    <option value="Otro">Otro Territorio</option>
+                </select>
+
+                <label>Fecha de Nacimiento</label>
+                <input type="date" id="onb-nac">
+
+                <label>Usuario / Apodo</label>
+                <input type="text" id="onb-user" placeholder="Ej: Carlos07">
+
+                <label>Contraseña</label>
+                <input type="password" id="onb-pass" placeholder="Ej: Clave123">
+
+                <button class="btn btn-purple" style="margin-top: 8px;" onclick="validarOnbStep1()">Continuar</button>
+            </div>
+            <!-- Onboarding Paso 2 -->
+            <div id="onb-step-2" style="display: none; text-align: left;">
+                <h3 style="color: var(--primary); text-align: center; margin-bottom: 4px; font-size: 15px;">Paso 2: Artistas e Intereses</h3>
+                <p style="font-size: 10px; color: var(--text-muted); text-align: center; margin-bottom: 10px;">Selecciona tus preferencias:</p>
+                
+                <label>Artistas Favoritos</label>
+                <div class="spotify-grid" id="grid-artistas"></div>
+
+                <label>Temas e Intereses</label>
+                <div class="spotify-chip-grid" id="grid-temas"></div>
+
+                <button class="btn btn-purple" style="margin-top: 4px;" onclick="finalizarOnboardingSpotify()">Finalizar Registro</button>
+            </div>
+        </div>
+    </div>
+    <!-- Layout Principal -->
+    <div id="app-main" style="display: none; flex-direction: column; flex: 1; width: 100%; max-width: 620px; margin: 0 auto; min-height: 100vh; position: relative;">
+        
+        <!-- Header -->
+        <header style="background: rgba(22, 18, 36, 0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000;">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <div style="width: 34px; height: 34px; background: var(--primary); border-radius: 10px; display: flex; justify-content: center; align-items: center; font-weight: 900; color: #0a0812; font-size: 15px; box-shadow: 0 4px 12px var(--primary-glow);">IW</div>
+                <span style="font-weight: 900; font-size: 17px; color: var(--primary); letter-spacing: 1px;">IT'S WORLD</span>
+            </div>
+            
+            <div class="profile-menu-container">
+                <div id="btn-header-profile" onclick="toggleHeaderMenu()" style="width: 38px; height: 38px; border-radius: 50%; background: var(--primary); color: #0a0812; font-weight: 800; display: flex; justify-content: center; align-items: center; cursor: pointer; border: 2px solid var(--primary-glow); overflow: hidden;">
+                    U
+                </div>
+                <div id="header-dropdown" class="dropdown-menu">
+                    <div class="dropdown-item" onclick="abrirConfiguracion(); toggleHeaderMenu();">Configuración</div>
+                    <div class="dropdown-item" onclick="abrirSeccionGuardados(); toggleHeaderMenu();">Guardados</div>
+                    <div class="dropdown-item" onclick="abrirNotificaciones(); toggleHeaderMenu();">Notificaciones</div>
+                    <div class="dropdown-item" onclick="cerrarSesion()">Cerrar</div>
+                </div>
+            </div>
+        </header>
+
+        <main id="app-content" style="flex: 1; padding: 16px; padding-bottom: 90px; width: 100%;"></main>
+
+        <!-- 3D Globe Container -->
+        <div id="globe-container" style="display: none; position: absolute; top: 60px; left: 0; width: 100%; height: calc(100vh - 120px); background: #000; z-index: 500;">
+            <div id="globeViz" style="width: 100%; height: 100%;"></div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <nav style="position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(22, 18, 36, 0.96); backdrop-filter: blur(18px); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 10px 0; z-index: 1000; box-shadow: 0 -6px 24px rgba(0,0,0,0.6);">
+            <!-- Home -->
+            <button class="nav-item active" style="background: none; border: none; color: var(--primary); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('feed', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </button>
+            <!-- Search -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('search', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <!-- Globe -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('mundo', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </button>
+            <!-- Market -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('market', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            </button>
+            <!-- Reels -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('reels', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m9 8 6 4-6 4z"/></svg>
+            </button>
+            <!-- Chats -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="navTo('chats', this)">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            </button>
+            <!-- Groups -->
+            <button class="nav-item" style="background: none; border: none; color: var(--text-muted); cursor: pointer; flex: 1; display:flex; justify-content:center;" onclick="
